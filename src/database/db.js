@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 export const connectDb = async () => {
     try {
         const connection = await mongoose.connect(
-            'mongodb://localhost:27017',
+            'mongodb://0.0.0.0:27017/',
             {
                 dbName: 'crud'
             }

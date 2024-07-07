@@ -81,3 +81,38 @@ export async function PUT(request, { params }) {
         )
     }
 }
+
+
+//ROUTE 5 : DELETE Employee  [http://localhost:3000/api/employee/employeeId]
+export async function DELETE(request, { params }) {
+    // Get employeeId From params 
+   const { employeeId } = params;
+
+   try {
+       await Employee.deleteOne({
+           _id: employeeId
+       })
+
+       // Return message And Status 
+       return NextResponse.json(
+           {
+               message: "Employee deleted successfully"
+           },
+           {
+               status: 201
+           }
+       )
+   } catch (error) {
+       console.log(error)
+
+       // Return Error And Status 
+       return NextResponse.json(
+           {
+               error: 'failed to delete employee',
+           },
+           {
+               status: 404,
+           }
+       )
+   }
+}
