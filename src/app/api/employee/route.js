@@ -2,21 +2,14 @@ import { connectDb } from "@/database/db";
 import { Employee } from "@/models/Employee";
 import { NextResponse } from "next/server";
 
-// Connect Db 
 connectDb();
 
-//ROUTE 1 : GET Employee [http://localhost:3000/api/employee]
 export async function GET() {
     try {
-        // Create Get Employee
         const getEmployee = await Employee.find();
-
-        // Return getEmployee
-        return NextResponse.json(getEmployee)
+        return NextResponse.json(getEmployee.length > 0 ? getEmployee : "Not Found")
     } catch (error) {
         console.log(error);
-
-        // return error
         return NextResponse.json(
             {
                 error: "Failed to get employee",
@@ -28,9 +21,7 @@ export async function GET() {
     }
 }
 
-//ROUTE 2 : POST Employee Detail [http://localhost:3000/api/employee]
 export async function POST(request) {
-    // get Employee data from frontend 
     const { name, email, address, salary } = await request.json();
 
     // validation 
@@ -45,9 +36,9 @@ export async function POST(request) {
         )
     }
 
+    // find employee through email
     const empl = await Employee.findOne({ email })
 
-    // Condition 
     if (empl) {
         return NextResponse.json(
             {
@@ -67,10 +58,7 @@ export async function POST(request) {
     })
 
     try {
-
         const savedEmployee = await employee.save();
-
-       
         return NextResponse.json(
             {
                 savedEmployee,
@@ -82,7 +70,6 @@ export async function POST(request) {
         )
     } catch (error) {
         console.log(error);
-
         return NextResponse.json(
             {
                 error: "Failed to save employee",

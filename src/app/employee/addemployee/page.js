@@ -26,7 +26,7 @@ const AddEmployee = () => {
             })
         })
 
-        const data = await res.json();
+        const data = res.text;
         const { message, error } = data;
 
         if (error) {
