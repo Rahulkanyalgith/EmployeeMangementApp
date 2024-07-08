@@ -12,21 +12,24 @@ const AddEmployee = () => {
     });
 
 
-    const addEmployeeDetail = async () => {
+  const addEmployeeDetail = async () => {
+        const myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+
+
         const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/employee`, {
-            method: 'POST',
-            headers: {
-                "content-type": "application/json"
-            },
+            method: "POST",
             body: JSON.stringify({
                 name: employee.name,
                 email: employee.email,
                 address: employee.address,
                 salary: employee.salary
-            })
-        })
-
-        const data = res.text;
+             }),
+            headers: myHeaders,
+          });
+          
+   
+const data = res.text;
         const { message, error } = data;
 
         if (error) {
